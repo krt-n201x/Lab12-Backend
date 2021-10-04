@@ -34,16 +34,17 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     AuthorityRepository authorityRepository;
     @Autowired
     UserRepository userRepository;
+
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        Organizer org1,org2,org3;
+        Organizer org1, org2, org3;
         org1 = organizerRepository.save(Organizer.builder()
                 .name("CAMT").build());
         org2 = organizerRepository.save(Organizer.builder()
                 .name("CMU").build());
         org3 = organizerRepository.save(Organizer.builder()
-        .name("ChiangMai").build());
+                .name("ChiangMai").build());
         Event tempEvent;
         tempEvent = eventRepository.save(Event.builder()
                 .category("Academic")
@@ -90,8 +91,16 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         tempEvent.setOrganizer(org3);
         org3.getOwnEvents().add(tempEvent);
         addUser();
+        org1.setUser(user1);
+        user1.setOrganizer(org1);
+        org2.setUser(user2);
+        user2.setOrganizer(org2);
+        org3.setUser(user3);
+        user3.setOrganizer(org3);
+
     }
-        User user1, user2, user3;
+    User user1, user2, user3;
+
     private void addUser() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authUser = Authority.builder().name(AuthorityName.ROLE_USER).build();
@@ -132,5 +141,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
+
     }
 }
