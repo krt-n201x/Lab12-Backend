@@ -96,7 +96,7 @@ public class AuthenticationRestController {
         }
     }
 
-    @PostMapping("${jwt.route.authentication.path}/account")
+    @PostMapping("${jwt.route.authentication.path}/user")
     public ResponseEntity<?> addUser(@RequestBody User user)throws AuthenticationException {
         Authority authUser = Authority.builder().name(AuthorityName.ROLE_USER).build();
         PasswordEncoder encoder = new BCryptPasswordEncoder();
